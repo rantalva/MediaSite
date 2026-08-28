@@ -1,0 +1,269 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\models\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:models\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\models\\entities\\article.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:models\\entities\\article.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\mockdata\\articlesstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:mockdata\\articlesstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\mockdata\\categoriesstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:mockdata\\categoriesstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\controllers\\articlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:controllers\\articlescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\models\\dtos\\article\\articledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:models\\dtos\\article\\articledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|c:\\scripts\\rantalva\\mediasite\\mediasite-backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5403CEE4-E761-4703-AEAD-DFEC7D6C7B1A}|MediaSite-backend.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 870,
+          "SelectedChildIndex": 16,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a2eaf38f-a0ad-4503-91f8-5f004a69a040}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CategoriesStore.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\MockData\\CategoriesStore.cs",
+              "RelativeDocumentMoniker": "MockData\\CategoriesStore.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\MockData\\CategoriesStore.cs",
+              "RelativeToolTip": "MockData\\CategoriesStore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T11:17:54.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\Category.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Category.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\Category.cs",
+              "RelativeToolTip": "Models\\Entities\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T11:17:07.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\User.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\User.cs",
+              "RelativeToolTip": "Models\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T10:25:08.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ArticleDto.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Dtos\\Article\\ArticleDto.cs",
+              "RelativeDocumentMoniker": "Models\\Dtos\\Article\\ArticleDto.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Dtos\\Article\\ArticleDto.cs",
+              "RelativeToolTip": "Models\\Dtos\\Article\\ArticleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T09:17:36.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ArticlesStore.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\MockData\\ArticlesStore.cs",
+              "RelativeDocumentMoniker": "MockData\\ArticlesStore.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\MockData\\ArticlesStore.cs",
+              "RelativeToolTip": "MockData\\ArticlesStore.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T05:42:11.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ArticlesController.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Controllers\\ArticlesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ArticlesController.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Controllers\\ArticlesController.cs",
+              "RelativeToolTip": "Controllers\\ArticlesController.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAQwDoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T05:38:13.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Article.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\Article.cs",
+              "RelativeDocumentMoniker": "Models\\Entities\\Article.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Models\\Entities\\Article.cs",
+              "RelativeToolTip": "Models\\Entities\\Article.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T05:20:12.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-28T05:19:25.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\scripts\\rantalva\\MediaSite\\MediaSite-backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T05:19:02.364Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 267,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 691,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
