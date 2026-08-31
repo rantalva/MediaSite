@@ -1,8 +1,18 @@
+using MediaSite_backend.Data;
+using MediaSite_backend.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ApplicationDbContext>(option =>
+{
+    option.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection"));
+});
+
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace MediaSite_backend.Models.Entities
 {
@@ -11,6 +12,9 @@ namespace MediaSite_backend.Models.Entities
         public string HeroImage { get; set; } = string.Empty;
         public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? LastEditDate { get; set; }
-        public Category? Category { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
+        public Guid AuthorId { get; set; }
+        public ApplicationUser Author { get; set; }
     }
 }

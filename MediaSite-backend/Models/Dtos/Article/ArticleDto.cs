@@ -1,27 +1,21 @@
-﻿using System.Text.RegularExpressions;
+﻿using MediaSite_backend.Models.Entities;
+using System.Text.RegularExpressions;
 
 namespace MediaSite_backend.Models.Dtos.Article
 {
     public class ArticleDto
     {
+        public Guid Id { get; set; }
         public required string Title { get; set; } = string.Empty;
+        public required string Slug { get; set; } = string.Empty;
         public required string Content { get; set; } = string.Empty;
         public required string HeroImage { get; set; } = string.Empty;
-
-        public string GenerateSlugFromTitle(string? title)
-        {
-            if (string.IsNullOrWhiteSpace(title))
-                return string.Empty;
-
-            var slug = title.Trim().ToLowerInvariant();
-
-            slug = Regex.Replace(slug, @"[^\p{L}\p{N}\s-]", "");
-
-            slug = Regex.Replace(slug, @"[\s-]+", "-");
-
-            return slug.Trim('-');
-        }
-
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? LastEditDate { get; set; }
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public Guid AuthorId { get; set; }
+        public string AuthorName { get; set; }
     }
 
 }
