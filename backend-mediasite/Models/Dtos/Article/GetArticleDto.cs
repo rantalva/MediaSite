@@ -1,9 +1,6 @@
-﻿using MediaSite_backend.Models.Entities;
-using System.Text.RegularExpressions;
-
-namespace MediaSite_backend.Models.Dtos.Article
+﻿namespace MediaSite_backend.Models.Dtos.Article
 {
-    public class ArticleDto
+    public class GetArticleDto
     {
         public Guid Id { get; set; }
         public required string Title { get; set; } = string.Empty;
@@ -17,5 +14,4 @@ namespace MediaSite_backend.Models.Dtos.Article
         public Guid AuthorId { get; set; }
         public string AuthorName { get; set; }
     }
-
 }

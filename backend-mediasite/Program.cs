@@ -2,6 +2,7 @@ using MediaSite_backend.Data;
 using MediaSite_backend.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Slugify;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -23,7 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection"));
 });
-
+builder.Services.AddSingleton<SlugHelper>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 builder.Services.AddControllers();

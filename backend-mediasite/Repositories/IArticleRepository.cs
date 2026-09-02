@@ -5,11 +5,11 @@ namespace MediaSite_backend.Repositories
 {
     public interface IArticleRepository
     {
-        Task<IEnumerable<ArticleDto>> GetAllArticlesAsync();
+        Task<IEnumerable<GetArticleDto>> GetAllArticlesAsync();
         Task<Article?> GetByIdAsync(Guid id);
         Task<Article?> GetBySlugAsync(string slug);
-        Task<Article> CreateAsync(ArticleDto articleDto);
-        Task<Article> UpdateAsync(Guid id, ArticleDto articleDto);
+        Task<Article> CreateAsync(CreateArticleDto createArticleDto);
+        Task<Article> UpdateAsync(Guid id, EditArticleDto editArticleDto);
         Task<bool> DeleteAsync(Guid id);
     }
 }

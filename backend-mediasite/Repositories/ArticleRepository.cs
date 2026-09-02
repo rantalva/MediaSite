@@ -3,18 +3,20 @@ using MediaSite_backend.Models.Dtos.Article;
 using MediaSite_backend.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Slugify;
 
 namespace MediaSite_backend.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
-        public ArticleRepository(ApplicationDbContext applicationDbContext)
+        private SlugHelper _slugHelper;
+        public ArticleRepository(ApplicationDbContext applicationDbContext, SlugHelper slugHelper)
         {
             _applicationDbContext = applicationDbContext;
+            _slugHelper = slugHelper;
         }
-        public async Task<Article> CreateAsync(ArticleDto articleDto)
+        public async Task<Article> CreateAsync(CreateArticleDto articleDto)
         {
             if (await _applicationDbContext.Articles.AnyAsync(a => a.Title == articleDto.Title)) 
             {
@@ -24,7 +26,7 @@ namespace MediaSite_backend.Repositories
             var newArticle = new Article();
 
             newArticle.Title = articleDto.Title;
-            newArticle.Slug = articleDto.Slug;
+            newArticle.Slug = _slugHelper.GenerateSlug(articleDto.Title);
             newArticle.Content = articleDto.Content;
             newArticle.HeroImage = articleDto.HeroImage;
             newArticle.CategoryId = articleDto.CategoryId;
@@ -52,10 +54,10 @@ namespace MediaSite_backend.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<ArticleDto>> GetAllArticlesAsync()
+        public async Task<IEnumerable<GetArticleDto>> GetAllArticlesAsync()
         {
             return await _applicationDbContext.Articles
-                .Select(a => new ArticleDto
+                .Select(a => new GetArticleDto
                 {
                     Id = a.Id,
                     Title = a.Title,
@@ -85,7 +87,7 @@ namespace MediaSite_backend.Repositories
             return await _applicationDbContext.Articles.FirstOrDefaultAsync(a => a.Slug == slug);
         }
 
-        public async Task<Article?> UpdateAsync(Guid id, ArticleDto articleDto)
+        public async Task<Article?> UpdateAsync(Guid id, EditArticleDto articleDto)
         {
             var article = await _applicationDbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
 
@@ -95,7 +97,7 @@ namespace MediaSite_backend.Repositories
             }
 
             article.Title = articleDto.Title;
-            article.Slug = articleDto.Slug;
+            article.Slug = _slugHelper.GenerateSlug(articleDto.Title);
             article.Content = articleDto.Content;
             article.HeroImage = articleDto.HeroImage;
             article.CategoryId = articleDto.CategoryId;

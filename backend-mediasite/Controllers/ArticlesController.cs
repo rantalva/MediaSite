@@ -54,7 +54,7 @@ namespace MediaSite_backend.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ArticleDto>> CreateArticle([FromBody] ArticleDto articleDto)
+        public async Task<ActionResult<CreateArticleDto>> CreateArticle([FromBody] CreateArticleDto articleDto)
         {
 
             var newArticle = await articleRepository.CreateAsync(articleDto);
@@ -69,9 +69,9 @@ namespace MediaSite_backend.Controllers
 
         // PUT api/<ArticlesController>/5
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<ArticleDto>> EditArticle(Guid id, [FromBody] ArticleDto articleDto)
+        public async Task<ActionResult<EditArticleDto>> EditArticle(Guid id, [FromBody] EditArticleDto editArticleDto)
         {
-            var article = await articleRepository.UpdateAsync(id, articleDto);
+            var article = await articleRepository.UpdateAsync(id, editArticleDto);
 
             if (article == null)
             {
