@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: mediasite-postgres
+    environment:
+      POSTGRES_DB: mediasite
+      POSTGRES_USER: mediasite
+      POSTGRES_PASSWORD: mediasite_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - mediasite_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mediasite_postgres_data:

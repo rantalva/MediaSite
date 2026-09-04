@@ -1,6 +1,6 @@
 ﻿namespace MediaSite_backend.Models.Dtos.Category
 {
-    public class EditCategoryDto
+    public class CategoryDto
     {
         public string? Name { get; set; }
     }

@@ -26,20 +26,30 @@ public class CategoriesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Category>> GetCategory(System.Guid id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _context.Categories
+            .Where(c => c.Id == id)
+            .Select(c => new GetCategoryWithPostsDto
+            {
+                Name = c.Name,
 
-        if (category == null)
-        {
-            return NotFound();
-        }
-
-        return category;
+                Articles = c.Articles
+                    .Select(a => new CategoryArticleDto
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Slug = a.Slug,
+                        HeroImage = a.HeroImage
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
+        return Ok(category);
     }
 
     // PUT: api/Category/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<ActionResult<EditCategoryDto>> EditCategory(Guid id, [FromBody] EditCategoryDto editArticleDto)
+    public async Task<ActionResult<CategoryDto>> EditCategory(Guid id, [FromBody] CategoryDto editArticleDto)
     {
         var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -56,8 +66,12 @@ public class CategoriesController : ControllerBase
     // POST: api/Category
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Category>> PostCategory(Category category)
+    public async Task<ActionResult<Category>> PostCategory([FromBody] CategoryDto editArticleDto)
     {
+        var category = new Category();
+
+        category.Name = editArticleDto.Name;
+
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
 

@@ -15,6 +15,8 @@ namespace MediaSite_backend.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<NewsletterSubscriber> NewsletterSubscribers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
