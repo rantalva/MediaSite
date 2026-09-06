@@ -2,6 +2,7 @@ using MediaSite_backend.Data;
 using MediaSite_backend.Models.Dtos.Article;
 using MediaSite_backend.Models.Dtos.Category;
 using MediaSite_backend.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,8 +66,9 @@ public class CategoriesController : ControllerBase
 
     // POST: api/Category
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [Authorize]
     [HttpPost]
-    public async Task<ActionResult<Category>> PostCategory([FromBody] CategoryDto editArticleDto)
+    public async Task<ActionResult<CategoryDto>> PostCategory([FromBody] CategoryDto editArticleDto)
     {
         var category = new Category();
 

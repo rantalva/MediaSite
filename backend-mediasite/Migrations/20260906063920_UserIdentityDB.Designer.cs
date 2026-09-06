@@ -3,6 +3,7 @@ using System;
 using MediaSite_backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MediaSite_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260906063920_UserIdentityDB")]
+    partial class UserIdentityDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,15 +96,32 @@ namespace MediaSite_backend.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("df3369fe-d3fa-41fb-b76a-05b4f64d042d"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "22222222-2222-2222-2222-222222222222",
+                            Email = "alvari.rantapelkonen@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Alvari",
+                            LastName = "Rantapelkonen",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ALVARI.RANTAPELKONEN@GMAIL.COM",
+                            NormalizedUserName = "ALVARI.RANTAPELKONEN@GMAIL.COM",
+                            PasswordHash = "Gt9Yc4AiIvmsC1QQbe2RZsCIqvoYlst2xbz0Fs8aHnw=",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "11111111-1111-1111-1111-111111111111",
+                            TwoFactorEnabled = false,
+                            UserName = "alvari.rantapelkonen@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaSite_backend.Models.Entities.Article", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("AuthorId")
@@ -134,13 +154,57 @@ namespace MediaSite_backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            AuthorId = new Guid("df3369fe-d3fa-41fb-b76a-05b4f64d042d"),
+                            CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Content = "Lorem ipsum dolor sit amet...",
+                            CreatedDate = new DateTime(2026, 8, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            HeroImage = "../Uploads/Menswear+closet.jpg",
+                            Slug = "vaatekaapin-kulmakivien-opas-2026",
+                            Title = "Vaatekaapin kulmakivien opas 2026"
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            AuthorId = new Guid("df3369fe-d3fa-41fb-b76a-05b4f64d042d"),
+                            CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Content = "Lorem ipsum dolor sit amet...",
+                            CreatedDate = new DateTime(2026, 8, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            HeroImage = "../Uploads/Menswear+closet.jpg",
+                            Slug = "black-fridayn-parhaimmat-ostosvinkit-miehille",
+                            Title = "Black Fridayn parhaimmat ostosvinkit miehille"
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            AuthorId = new Guid("df3369fe-d3fa-41fb-b76a-05b4f64d042d"),
+                            CategoryId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Content = "Lorem ipsum dolor sit amet...",
+                            CreatedDate = new DateTime(2026, 8, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            HeroImage = "../Uploads/Menswear+closet.jpg",
+                            Slug = "hellride-2026-madness-valokuvissa",
+                            Title = "Hellride 2026: Madness valokuvissa"
+                        },
+                        new
+                        {
+                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            AuthorId = new Guid("df3369fe-d3fa-41fb-b76a-05b4f64d042d"),
+                            CategoryId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Content = "Lorem ipsum dolor sit amet...",
+                            CreatedDate = new DateTime(2026, 8, 24, 0, 0, 0, 0, DateTimeKind.Utc),
+                            HeroImage = "../Uploads/Menswear+closet.jpg",
+                            Slug = "jokerit-palaa-liigaan-paakaupungin-derbyt-vuonna-2026",
+                            Title = "Jokerit palaa liigaan: Pääkaupungin derbyt vuonna 2026"
+                        });
                 });
 
             modelBuilder.Entity("MediaSite_backend.Models.Entities.Category", b =>
@@ -155,6 +219,28 @@ namespace MediaSite_backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Name = "Style"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Name = "Shopping"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Name = "Culture"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Name = "Sports"
+                        });
                 });
 
             modelBuilder.Entity("MediaSite_backend.Models.Entities.NewsletterSubscriber", b =>
@@ -307,20 +393,16 @@ namespace MediaSite_backend.Migrations
 
             modelBuilder.Entity("MediaSite_backend.Models.Entities.Article", b =>
                 {
-                    b.HasOne("MediaSite_backend.Models.Entities.ApplicationUser", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("MediaSite_backend.Models.Entities.ApplicationUser", "Author")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MediaSite_backend.Models.Entities.Category", "Category")
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
