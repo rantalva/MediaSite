@@ -102,8 +102,8 @@ public class NewsletterSubscribersController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateStatus(Guid id, bool isActive)
+    [HttpPut("{id:guid}/status")]
+    public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] NewsletterSubscriberStatusDto newsletterSubscriberStatusDto)
     {
         var subscriber = await _context.NewsletterSubscribers
             .FindAsync(id);
@@ -111,14 +111,14 @@ public class NewsletterSubscribersController : ControllerBase
         if (subscriber == null)
             return NotFound();
 
-        subscriber.IsActive = isActive;
+        subscriber.IsActive = newsletterSubscriberStatusDto.Status;
 
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPut("{id:guid}/email")]
     public async Task<IActionResult> UpdateEmail(Guid id, [FromBody] NewsletterSubscriberDto newsletterSubscriberDto)
     {
         var subscriber = await _context.NewsletterSubscribers
