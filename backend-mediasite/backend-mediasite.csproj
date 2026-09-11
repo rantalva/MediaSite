@@ -28,4 +28,9 @@
     <None Include="wwwroot\Uploads\Menswear-closet.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\NewsletterSubscriber\" />
+    <Folder Include="Repositories\Category\" />
+  </ItemGroup>
+
 </Project>

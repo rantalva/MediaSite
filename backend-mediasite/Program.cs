@@ -1,6 +1,6 @@
 using MediaSite_backend.Data;
 using MediaSite_backend.Models.Entities;
-using MediaSite_backend.Repositories;
+using MediaSite_backend.Repositories.ArticleRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;

@@ -1,7 +1,7 @@
 ﻿using MediaSite_backend.MockData;
 using MediaSite_backend.Models.Dtos.Article;
 using MediaSite_backend.Models.Entities;
-using MediaSite_backend.Repositories;
+using MediaSite_backend.Repositories.ArticleRepository;
 using Microsoft.AspNetCore.Mvc;
 using Slugify;
 

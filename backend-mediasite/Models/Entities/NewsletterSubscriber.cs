@@ -15,6 +15,6 @@ namespace MediaSite_backend.Models.Entities
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
-        public NewsletterSubscriberStatus IsActive { get; set; } = NewsletterSubscriberStatus.Active;
+        public NewsletterSubscriberStatus Status { get; set; } = NewsletterSubscriberStatus.Active;
     }
 }

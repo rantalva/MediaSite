@@ -1,7 +1,7 @@
 ﻿using MediaSite_backend.Models.Dtos.Article;
 using MediaSite_backend.Models.Entities;
 
-namespace MediaSite_backend.Repositories
+namespace MediaSite_backend.Repositories.ArticleRepository
 {
     public interface IArticleRepository
     {

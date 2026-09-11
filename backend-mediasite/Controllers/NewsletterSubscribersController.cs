@@ -111,7 +111,7 @@ public class NewsletterSubscribersController : ControllerBase
         if (subscriber == null)
             return NotFound();
 
-        subscriber.IsActive = newsletterSubscriberStatusDto.Status;
+        subscriber.Status = newsletterSubscriberStatusDto.Status;
 
         await _context.SaveChangesAsync();
 
