@@ -29,8 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\NewsletterSubscriber\" />
-    <Folder Include="Repositories\Category\" />
+    <Folder Include="Repositories\NewsletterSubscriberRepository\" />
   </ItemGroup>
 
 </Project>
