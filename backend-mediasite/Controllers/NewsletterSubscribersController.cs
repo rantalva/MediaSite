@@ -3,15 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Data;
 using MediaSite_backend.Models.Dtos.NewsletterSubscriber;
+using MediaSite_backend.Repositories.NewsletterSubscriberRepository;
 
 [Route("api/[controller]")]
 [ApiController]
 public class NewsletterSubscribersController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    public NewsletterSubscribersController(ApplicationDbContext context)
+    private readonly INewsLetterSubscriberRepository _newsLetterSubscriberRepository;
+    public NewsletterSubscribersController(ApplicationDbContext context, INewsLetterSubscriberRepository newsLetterSubscriberRepository)
     {
         _context = context;
+        _newsLetterSubscriberRepository = newsLetterSubscriberRepository;
     }
 
     // GET: api/NewsletterSubscriber
@@ -69,19 +72,12 @@ public class NewsletterSubscribersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<NewsletterSubscriberDto>> PostNewsletterSubscriber([FromBody]NewsletterSubscriberDto newsletterSubscriberDto)
     {
-        var newsletterSubscribers = await _context.NewsletterSubscribers.ToListAsync();
+        var newsletterSubscriber = await _newsLetterSubscriberRepository.AddNewsletterSubscriberAsync(newsletterSubscriberDto);
 
-        if (newsletterSubscribers.Any(n => n.Email.Contains(newsletterSubscriberDto.Email)))
+        if (newsletterSubscriber == null)
         {
             return BadRequest();
         }
-
-        var newsletterSubscriber = new NewsletterSubscriber();
-
-        newsletterSubscriber.Email = newsletterSubscriberDto.Email;
-
-        _context.NewsletterSubscribers.Add(newsletterSubscriber);
-        await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetNewsletterSubscriber", new { id = newsletterSubscriber.Id }, newsletterSubscriber);
     }

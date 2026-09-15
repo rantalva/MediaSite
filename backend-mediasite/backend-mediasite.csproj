@@ -28,8 +28,4 @@
     <None Include="wwwroot\Uploads\Menswear-closet.jpg" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\NewsletterSubscriberRepository\" />
-  </ItemGroup>
-
 </Project>

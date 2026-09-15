@@ -2,6 +2,7 @@ using MediaSite_backend.Data;
 using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Repositories.ArticleRepository;
 using MediaSite_backend.Repositories.CategoryRepository;
+using MediaSite_backend.Repositories.NewsletterSubscriberRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -38,6 +39,7 @@ builder.Services
 builder.Services.AddSingleton<SlugHelper>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<INewsLetterSubscriberRepository, NewsLetterSubscriberRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
