@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Data;
 using MediaSite_backend.Models.Dtos.NewsletterSubscriber;
+using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Repositories.NewsletterSubscriberRepository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -90,5 +91,11 @@ public class NewsletterSubscribersController : ControllerBase
         }
 
         return NoContent();
+    }
+    [Authorize]
+    [HttpGet("test-auth")]
+    public IActionResult TestAuth()
+    {
+        return Ok("You are authenticated.");
     }
 }
