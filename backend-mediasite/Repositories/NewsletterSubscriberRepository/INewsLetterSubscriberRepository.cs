@@ -6,9 +6,10 @@ namespace MediaSite_backend.Repositories.NewsletterSubscriberRepository
 {
     public interface INewsLetterSubscriberRepository
     {
-        Task<IEnumerable<NewsletterSubscriberDto>> GetNewsletterSubscribersAsync();
+        Task<IEnumerable<NewsletterSubscriber>> GetNewsletterSubscribersAsync();
         Task<NewsletterSubscriber> GetNewsletterSubscriberIdAsync(Guid id);
-        Task<NewsletterSubscriber> EditNewsletterSubscriberAsync(Guid id, NewsletterSubscriberDto newsletterSubscriberDto);
+        Task<NewsletterSubscriber> EditNewsletterSubscriberEmailAsync(Guid id, NewsletterSubscriberDto newsletterSubscriberDto);
+        Task<NewsletterSubscriber> EditNewsletterSubscriberStatusAsync(Guid id, NewsletterSubscriberStatusDto newsletterSubscriberDto);
         Task<NewsletterSubscriber> AddNewsletterSubscriberAsync(NewsletterSubscriberDto newsletterSubscriberDto);
         Task<bool> DeleteNewsletterSubscriberAsync(Guid id);
     }

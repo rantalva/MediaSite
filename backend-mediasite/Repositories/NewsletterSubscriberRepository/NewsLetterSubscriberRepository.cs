@@ -31,24 +31,59 @@ namespace MediaSite_backend.Repositories.NewsletterSubscriberRepository
             return newSubscriber;
         }
 
-        public Task<bool> DeleteNewsletterSubscriberAsync(Guid id)
+        public async Task<bool> DeleteNewsletterSubscriberAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var newsLetterSubscriber = await _applicationDbContext.NewsletterSubscribers.FindAsync(id);
+
+            if (newsLetterSubscriber == null)
+            {
+                return false;
+            }
+
+            _applicationDbContext.NewsletterSubscribers.Remove(newsLetterSubscriber);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<NewsletterSubscriber> EditNewsletterSubscriberAsync(Guid id, NewsletterSubscriberDto newsletterSubscriberDto)
+        public async Task<NewsletterSubscriber> EditNewsletterSubscriberEmailAsync(Guid id, NewsletterSubscriberDto newsletterSubscriberDto)
         {
-            throw new NotImplementedException();
+            var subscriber = await _applicationDbContext.NewsletterSubscribers.FindAsync(id);
+
+            if (subscriber == null) 
+            {
+                return null;
+            }
+
+            subscriber.Email = newsletterSubscriberDto.Email;
+
+            return subscriber;
         }
 
-        public Task<NewsletterSubscriber> GetNewsletterSubscriberIdAsync(Guid id)
+        public async Task<NewsletterSubscriber> EditNewsletterSubscriberStatusAsync(Guid id, NewsletterSubscriberStatusDto newsletterSubscriberDto)
         {
-            throw new NotImplementedException();
+            var subscriber = await _applicationDbContext.NewsletterSubscribers.FindAsync(id);
+
+            if (subscriber == null)
+            {
+                return null;
+            }
+
+            subscriber.Status = newsletterSubscriberDto.Status;
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return subscriber;
         }
 
-        public Task<IEnumerable<NewsletterSubscriberDto>> GetNewsletterSubscribersAsync()
+        public async Task<NewsletterSubscriber> GetNewsletterSubscriberIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.NewsletterSubscribers.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<NewsletterSubscriber>> GetNewsletterSubscribersAsync()
+        {
+            return await _applicationDbContext.NewsletterSubscribers.ToListAsync();
         }
     }
 }
