@@ -47,6 +47,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    await SeedData.InitializeAsync(scope.ServiceProvider);
+}
+
 app.MapIdentityApi<ApplicationUser>();
 
 app.UseStaticFiles();
