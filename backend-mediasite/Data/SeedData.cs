@@ -25,6 +25,35 @@ namespace MediaSite_backend.Data
                 }
             }
 
+            var userManager =
+                services.GetRequiredService<UserManager<ApplicationUser>>();
+
+            var existingUser =
+                await userManager.FindByEmailAsync("test@gmail.com");
+
+            if (existingUser == null)
+            {
+                var testUser = new ApplicationUser
+                {
+                    Email = "test@gmail.com",
+                    UserName = "test@gmail.com",
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(
+                    testUser,
+                    "TestPassword123!"
+                );
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(
+                        testUser,
+                        ApplicationUserRoles.Admin
+                    );
+                }
+            }
+
         }
 
     }
