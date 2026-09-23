@@ -5,7 +5,7 @@
 namespace MediaSite_backend.Migrations
 {
     /// <inheritdoc />
-    public partial class UserIdentityDBRefactor2 : Migration
+    public partial class CategoryRepository : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

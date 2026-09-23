@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MediaSite_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260906074358_UserIdentityDBRefactor")]
-    partial class UserIdentityDBRefactor
+    [Migration("20260915180444_identitytest")]
+    partial class identitytest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,8 +170,8 @@ namespace MediaSite_backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
