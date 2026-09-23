@@ -7,7 +7,7 @@ using Slugify;
 
 namespace MediaSite_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/articles")]
     [ApiController]
     public class ArticlesController(IArticleRepository articleRepository) : ControllerBase
     {
