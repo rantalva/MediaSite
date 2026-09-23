@@ -92,7 +92,7 @@ public class NewsletterSubscribersController : ControllerBase
 
         return NoContent();
     }
-    [Authorize]
+    [Authorize(Roles = ApplicationUserRoles.Admin)]
     [HttpGet("test-auth")]
     public IActionResult TestAuth()
     {
