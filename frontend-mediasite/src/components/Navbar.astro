@@ -1,0 +1,321 @@
+---
+import { getCategories } from '../lib/api';
+import { getSession } from '../lib/auth';
+
+const categories = (await getCategories()).filter((category) => category.name);
+let session: Awaited<ReturnType<typeof getSession>> = null;
+
+try {
+	session = await getSession(Astro.cookies);
+} catch {
+	session = null;
+}
+---
+
+<nav class="navbar">
+	<div class="navbar-inner">
+		<a class="brand" href="/">MediaSite</a>
+
+		<nav class="categories" aria-label="Kategoriat">
+			{categories.map((category) => (
+				<a class="nav-link" href={`/categories/${encodeURIComponent(category.name as string)}`}>
+					{category.name}
+				</a>
+			))}
+		</nav>
+
+		<div class="auth">
+			{session ? (
+				<>
+					<span class="user" title={session.email}>{session.email}</span>
+					<button class="btn" type="button" data-logout>Kirjaudu ulos</button>
+				</>
+			) : (
+				<>
+					<button class="btn" type="button" data-auth-open="login">Kirjaudu sisään</button>
+					<button class="btn btn-primary" type="button" data-auth-open="register">Luo tili</button>
+				</>
+			)}
+		</div>
+	</div>
+</nav>
+
+<dialog id="auth-dialog" class="auth-dialog">
+	<form method="dialog" class="dialog-topbar">
+		<button class="dialog-close" value="cancel" aria-label="Sulje">&times;</button>
+	</form>
+
+	<div class="tabs" role="tablist">
+		<button id="tab-login" type="button" role="tab">Kirjaudu sisään</button>
+		<button id="tab-register" type="button" role="tab">Luo tili</button>
+	</div>
+
+	<form id="login-form" class="auth-form" action="/api/auth/login" method="post" novalidate>
+		<label>
+			Sähköposti
+			<input type="email" name="email" autocomplete="email" required />
+		</label>
+		<label>
+			Salasana
+			<input type="password" name="password" autocomplete="current-password" required />
+		</label>
+		<p class="form-error" data-error hidden></p>
+		<button class="btn btn-primary" type="submit">Kirjaudu sisään</button>
+	</form>
+
+	<form id="register-form" class="auth-form" action="/api/auth/register" method="post" hidden novalidate>
+		<label>
+			Sähköposti
+			<input type="email" name="email" autocomplete="email" required />
+		</label>
+		<label>
+			Salasana
+			<input type="password" name="password" autocomplete="new-password" minlength="6" required />
+		</label>
+		<label>
+			Salasana uudelleen
+			<input type="password" name="confirmPassword" autocomplete="new-password" minlength="6" required />
+		</label>
+		<p class="form-error" data-error hidden></p>
+		<button class="btn btn-primary" type="submit">Luo tili</button>
+	</form>
+</dialog>
+
+<script>
+	const dialog = document.getElementById('auth-dialog') as HTMLDialogElement;
+	let activeTab: 'login' | 'register' = 'login';
+
+	const loginForm = document.getElementById('login-form') as HTMLFormElement;
+	const registerForm = document.getElementById('register-form') as HTMLFormElement;
+	const tabLogin = document.getElementById('tab-login') as HTMLButtonElement;
+	const tabRegister = document.getElementById('tab-register') as HTMLButtonElement;
+
+	function updateVisible() {
+		loginForm.hidden = activeTab !== 'login';
+		registerForm.hidden = activeTab !== 'register';
+		tabLogin.classList.toggle('active', activeTab === 'login');
+		tabRegister.classList.toggle('active', activeTab === 'register');
+	}
+
+	function openDialog(tab: 'login' | 'register') {
+		activeTab = tab;
+		updateVisible();
+		if (!dialog.open) {
+			dialog.showModal();
+		}
+	}
+
+	document.querySelectorAll<HTMLButtonElement>('[data-auth-open]').forEach((button) => {
+		button.addEventListener('click', () => {
+			openDialog(button.dataset.authOpen === 'register' ? 'register' : 'login');
+		});
+	});
+
+	tabLogin.addEventListener('click', () => openDialog('login'));
+	tabRegister.addEventListener('click', () => openDialog('register'));
+
+	[loginForm, registerForm].forEach((form) => {
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			const errorEl = form.querySelector('[data-error]') as HTMLParagraphElement;
+			const submitBtn = form.querySelector('[type="submit"]') as HTMLButtonElement;
+
+			errorEl.hidden = true;
+			errorEl.textContent = '';
+			submitBtn.disabled = true;
+
+			let data: { ok: boolean; message?: string };
+			try {
+				const response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+				data = await response.json();
+			} catch {
+				data = { ok: false, message: 'Yhteyden muodostaminen palvelimeen epäonnistui.' };
+			}
+
+			submitBtn.disabled = false;
+
+			if (data.ok) {
+				window.location.reload();
+			} else {
+				errorEl.textContent = data.message || 'Tapahtui virhe.';
+				errorEl.hidden = false;
+			}
+		});
+	});
+
+	const logoutButton = document.querySelector<HTMLButtonElement>('[data-logout]');
+	if (logoutButton) {
+		logoutButton.addEventListener('click', async () => {
+			await fetch('/api/auth/logout', { method: 'POST' });
+			window.location.reload();
+		});
+	}
+</script>
+
+<style>
+	.navbar {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: #ffffff;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.navbar-inner {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 0 1rem;
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		min-height: 3.5rem;
+		flex-wrap: wrap;
+	}
+
+	.brand {
+		font-weight: 700;
+		font-size: 1.125rem;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.categories {
+		display: flex;
+		align-items: center;
+		gap: 0.125rem;
+		flex-wrap: wrap;
+	}
+
+	.nav-link {
+		padding: 0.375rem 0.625rem;
+		border-radius: 6px;
+		color: inherit;
+		text-decoration: none;
+		font-size: 0.875rem;
+	}
+
+	.nav-link:hover {
+		background: #f3f4f6;
+	}
+
+	.auth {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.user {
+		color: #6b7280;
+		font-size: 0.875rem;
+		max-width: 200px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.btn {
+		border: 1px solid #d1d5db;
+		border-radius: 8px;
+		background: #ffffff;
+		color: #111827;
+		padding: 0.5rem 0.875rem;
+		font-size: 0.875rem;
+		cursor: pointer;
+		white-space: nowrap;
+	}
+
+	.btn:hover {
+		background: #f3f4f6;
+	}
+
+	.btn-primary {
+		background: #111827;
+		border-color: #111827;
+		color: #ffffff;
+	}
+
+	.btn-primary:hover {
+		background: #1f2937;
+	}
+
+	.auth-dialog {
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		padding: 1.25rem;
+		max-width: 360px;
+		width: 100%;
+	}
+
+	.auth-dialog::backdrop {
+		background: rgba(17, 24, 39, 0.4);
+	}
+
+	.dialog-topbar {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 0.5rem;
+	}
+
+	.dialog-close {
+		border: none;
+		background: none;
+		font-size: 1.5rem;
+		line-height: 1;
+		cursor: pointer;
+		color: #6b7280;
+	}
+
+	.tabs {
+		display: flex;
+		gap: 0.25rem;
+		background: #f3f4f6;
+		border-radius: 8px;
+		padding: 0.25rem;
+		margin-bottom: 1rem;
+	}
+
+	.tabs button {
+		flex: 1;
+		border: none;
+		background: none;
+		padding: 0.5rem;
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 0.875rem;
+		color: #6b7280;
+	}
+
+	.tabs button.active {
+		background: #ffffff;
+		color: #111827;
+		font-weight: 600;
+	}
+
+	.auth-form {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.auth-form label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-size: 0.875rem;
+		color: #374151;
+	}
+
+	.auth-form input {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid #d1d5db;
+		border-radius: 8px;
+		font-size: 0.875rem;
+	}
+
+	.form-error {
+		margin: 0;
+		color: #b91c1c;
+		font-size: 0.875rem;
+	}
+</style>

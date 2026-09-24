@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCategories, imageUrl } from '../../lib/api';
+import { getAccessToken } from '../../lib/auth';
+import type { Category } from '../../types/api';
+
+const { name } = Astro.params;
+
+let category: Category | null = null;
+
+try {
+	category =
+		(await getCategories(await getAccessToken(Astro.cookies))).find((category) => category.name === name) ??
+		null;
+} catch {
+	category = null;
+}
+
+if (!category) {
+	Astro.response.status = 404;
+}
+---
+
+{category && (
+	<Layout
+		title={`${category.name} - MediaSite`}
+		description={`Artikkelit kategoriasta ${category.name}`}
+	>
+		<main>
+			<header class="page-header">
+				<a class="back" href="/">← Kaikki artikkelit</a>
+				<h1>{category.name}</h1>
+				<p class="tagline">{category.articles.length} artikkelia</p>
+			</header>
+
+			<section class="article-list">
+				{
+					category.articles.map((article) => (
+						<article class="card">
+							<a class="card-link" href={`/articles/${article.slug}`}>
+								{article.heroImage && (
+									<img
+										class="card-image"
+										src={imageUrl(article.heroImage)}
+										alt=""
+										loading="lazy"
+									/>
+								)}
+								<h2>{article.title}</h2>
+							</a>
+						</article>
+					))
+				}
+			</section>
+		</main>
+	</Layout>
+)}
+
+{!category && (
+	<Layout title="Kategoriaa ei löytynyt - MediaSite">
+		<main class="not-found">
+			<h1>Kategoriaa ei löytynyt</h1>
+			<p>
+				<a href="/">← Takaisin kaikkiin artikkeleihin</a>
+			</p>
+		</main>
+	</Layout>
+)}
+
+<style>
+	main {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.back {
+		color: #3245ff;
+		text-decoration: none;
+	}
+
+	h1 {
+		margin: 0.5rem 0 0;
+		font-size: 2.25rem;
+	}
+
+	.tagline {
+		margin: 0.25rem 0 0;
+		color: #6b7280;
+	}
+
+	.page-header {
+		margin-bottom: 2rem;
+	}
+
+	.article-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.card {
+		background: #ffffff;
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	.card-link {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.card-image {
+		width: 100%;
+		height: 180px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.card h2 {
+		margin: 1rem;
+		font-size: 1.25rem;
+	}
+
+	.card-link:hover h2 {
+		text-decoration: underline;
+	}
+</style>

@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ApiError, getArticleBySlug, imageUrl } from '../../lib/api';
+import { getAccessToken, refreshAccessToken } from '../../lib/auth';
+import { formatDate } from '../../lib/format';
+import type { Article } from '../../types/api';
+
+const { slug } = Astro.params;
+
+let article: Article | null = null;
+
+try {
+	let token = await getAccessToken(Astro.cookies);
+
+	try {
+		article = slug ? await getArticleBySlug(slug, token) : null;
+	} catch (error) {
+		if (error instanceof ApiError && error.status === 401 && token) {
+			token = await refreshAccessToken(Astro.cookies);
+			article = slug ? await getArticleBySlug(slug, token) : null;
+		} else {
+			throw error;
+		}
+	}
+} catch {
+	article = null;
+}
+
+if (!article) {
+	Astro.response.status = 404;
+}
+
+const created = formatDate(article?.createdDate);
+const lastEdited = formatDate(article?.lastEditDate);
+const paragraphs = (article?.content ?? '')
+	.split(/\r?\n/)
+	.map((line) => line.trim())
+	.filter(Boolean);
+---
+
+{article && (
+	<Layout
+		title={`${article.title} - MediaSite`}
+		description={article.title}
+	>
+		<main>
+			<article>
+				<header class="article-header">
+					<p class="article-category">
+						<a href={`/categories/${encodeURIComponent(article.categoryName)}`}>
+							{article.categoryName}
+						</a>
+					</p>
+					<h1>{article.title}</h1>
+					<p class="article-meta">
+						{article.authorName && <span>{article.authorName}</span>}
+						{article.authorName && <span aria-hidden="true"> · </span>}
+						<time datetime={article.createdDate ?? undefined}>{created}</time>
+					</p>
+				</header>
+
+				{article.heroImage && (
+					<img class="article-hero" src={imageUrl(article.heroImage)} alt="" />
+				)}
+
+				<div class="article-content">
+					{paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+				</div>
+
+				{lastEdited && <p class="edited">Muokattu: {lastEdited}</p>}
+
+				<footer class="article-footer">
+					<a href="/">← Takaisin kaikkiin artikkeleihin</a>
+				</footer>
+			</article>
+		</main>
+	</Layout>
+)}
+
+{!article && (
+	<Layout title="Artikkelia ei löytynyt - MediaSite">
+		<main class="not-found">
+			<h1>Artikkelia ei löytynyt</h1>
+			<p>
+				<a href="/">← Takaisin kaikkiin artikkeleihin</a>
+			</p>
+		</main>
+	</Layout>
+)}
+
+<style>
+	main {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.article-header {
+		margin-bottom: 1.5rem;
+	}
+
+	.article-category {
+		margin: 0 0 0.5rem;
+	}
+
+	.article-category a {
+		color: #3245ff;
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: 2.25rem;
+		line-height: 1.2;
+	}
+
+	.article-meta {
+		margin: 0.75rem 0 0;
+		color: #6b7280;
+	}
+
+	.article-hero {
+		width: 100%;
+		max-height: 420px;
+		object-fit: cover;
+		border-radius: 12px;
+		margin-bottom: 1.5rem;
+	}
+
+	.article-content {
+		font-size: 1.125rem;
+	}
+
+	.article-content p {
+		margin: 0 0 1rem;
+	}
+
+	.edited {
+		color: #9ca3af;
+		font-size: 0.875rem;
+	}
+
+	.article-footer {
+		margin-top: 2rem;
+		padding-top: 1rem;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.article-footer a {
+		color: #3245ff;
+		text-decoration: none;
+	}
+</style>

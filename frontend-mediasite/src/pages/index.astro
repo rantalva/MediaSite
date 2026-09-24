@@ -1,11 +1,106 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getArticles, imageUrl } from '../lib/api';
+import { getAccessToken } from '../lib/auth';
+import { formatDate } from '../lib/format';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const articles = await getArticles(await getAccessToken(Astro.cookies));
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="MediaSite" description="Uusimmat artikkelit MediaSite-sivustolla">
+	<main>
+		<header class="page-header">
+			<h1>MediaSite</h1>
+			<p class="tagline">Uusimmat artikkelit</p>
+		</header>
+
+		<section class="article-list">
+			{
+				articles.map((article) => (
+					<article class="card">
+						<a class="card-link" href={`/articles/${article.slug}`}>
+							{article.heroImage && (
+								<img class="card-image" src={imageUrl(article.heroImage)} alt="" loading="lazy" />
+							)}
+							<h2>{article.title}</h2>
+						</a>
+						<p class="card-meta">
+							<a href={`/categories/${encodeURIComponent(article.categoryName)}`}>
+								{article.categoryName}
+							</a>
+							{' · '}
+							<time datetime={article.createdDate ?? undefined}>{formatDate(article.createdDate)}</time>
+						</p>
+					</article>
+				))
+			}
+		</section>
+	</main>
 </Layout>
+
+<style>
+	main {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.page-header {
+		margin-bottom: 2rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: 2.5rem;
+	}
+
+	.tagline {
+		margin: 0.25rem 0 0;
+		color: #6b7280;
+	}
+
+	.article-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.card {
+		background: #ffffff;
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	.card-link {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.card-image {
+		width: 100%;
+		height: 180px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.card h2 {
+		margin: 1rem;
+		font-size: 1.25rem;
+	}
+
+	.card-link:hover h2 {
+		text-decoration: underline;
+	}
+
+	.card-meta {
+		margin: 0 1rem 1rem;
+		color: #6b7280;
+		font-size: 0.875rem;
+	}
+
+	.card-meta a {
+		color: #6b7280;
+	}
+</style>
