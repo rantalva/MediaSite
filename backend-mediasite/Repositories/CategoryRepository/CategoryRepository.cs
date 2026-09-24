@@ -15,7 +15,7 @@ namespace MediaSite_backend.Repositories.CategoryRepository
         }
         public async Task<Category> CreateCategoryAsync(CategoryDto categoryDto)
         {
-            if (await _applicationDbContext.Categories.AnyAsync(c => c.Name == categoryDto.Name)) 
+            if (await _applicationDbContext.Categories.AnyAsync(c => c.Name == categoryDto.Name))
             {
                 return null;
             }
@@ -47,12 +47,12 @@ namespace MediaSite_backend.Repositories.CategoryRepository
         {
             var category = await _applicationDbContext.Categories.FindAsync(id);
 
-            if (category != null) 
+            if (category != null)
             {
                 category.Name = categoryDto.Name;
 
-                await _applicationDbContext.SaveChangesAsync(); 
-                
+                await _applicationDbContext.SaveChangesAsync();
+
                 return category;
             }
 
@@ -88,24 +88,25 @@ namespace MediaSite_backend.Repositories.CategoryRepository
             {
                 return null;
             }
-            
+
             return category;
         }
 
         public async Task<IEnumerable<GetCategoryWithPostsDto>> GetCategoriesWithArticlesAsync()
         {
             return await _applicationDbContext.Categories
+                .OrderBy(c => c.Name)
                 .Select(c => new GetCategoryWithPostsDto
                 {
                     Name = c.Name,
 
                     Articles = c.Articles
-                        .Select(a => new CategoryArticleDto 
-                        {   
-                            Id = a.Id, 
-                            Title = a.Title, 
-                            Slug = a.Slug, 
-                            HeroImage = a.HeroImage 
+                        .Select(a => new CategoryArticleDto
+                        {
+                            Id = a.Id,
+                            Title = a.Title,
+                            Slug = a.Slug,
+                            HeroImage = a.HeroImage
                         })
                         .ToList()
                 })

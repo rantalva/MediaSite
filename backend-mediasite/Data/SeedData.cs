@@ -9,6 +9,7 @@ namespace MediaSite_backend.Data
 {
     public static class SeedData
     {
+        private static string _testAuthorGuid = "01a075c5-ca0f-717f-a73f-8117fab80e80";
         public static async Task InitializeAsync(IServiceProvider services)
         {
             var categoryRepository = services.GetRequiredService<ICategoryRepository>();
@@ -33,11 +34,11 @@ namespace MediaSite_backend.Data
                 },
             };
 
-            foreach (var category in categories) 
+            foreach (var category in categories)
             {
                 var existingCategory = await categoryRepository.GetCategoryWithArticlesByNameAsync(category.Name);
 
-                if (existingCategory == null) 
+                if (existingCategory == null)
                 {
                     await categoryRepository.CreateCategoryAsync(category);
                 }
@@ -61,32 +62,45 @@ namespace MediaSite_backend.Data
                 }
             }
 
-            var userManager =
-                services.GetRequiredService<UserManager<ApplicationUser>>();
-
-            var existingUser =
-                await userManager.FindByEmailAsync("test@gmail.com");
-
-            if (existingUser == null)
+            ApplicationUser[] seedUsers =
             {
-                var testUser = new ApplicationUser
+                new ApplicationUser
                 {
                     Email = "test@gmail.com",
                     UserName = "test@gmail.com",
                     EmailConfirmed = true
-                };
-
-                var result = await userManager.CreateAsync(
-                    testUser,
-                    "TestPassword123!"
-                );
-
-                if (result.Succeeded)
+                },
+                new ApplicationUser
                 {
-                    await userManager.AddToRoleAsync(
-                        testUser,
-                        ApplicationUserRoles.Admin
-                    );
+                    Email = "alvari.rantapelkonen@gmail.com",
+                    UserName = "alvari.rantapelkonen@gmail.com",
+                    EmailConfirmed = true
+                }
+            };
+
+            foreach (var user in seedUsers)
+            {
+                var userManager =
+                    services.GetRequiredService<UserManager<ApplicationUser>>();
+
+                var existingUser =
+                    await userManager.FindByEmailAsync(user.Email);
+
+                if (existingUser == null)
+                {
+                    var result = await userManager.CreateAsync(user, "TestPassword123!");
+
+                    if (result.Succeeded)
+                    {
+                        if (user.Email != "alvari.rantapelkonen@gmail.com")
+                        {
+                            await userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
+                        }
+                        else
+                        {
+                            await userManager.AddToRoleAsync(user, ApplicationUserRoles.Author);
+                        }
+                    }
                 }
             }
 
@@ -99,16 +113,16 @@ namespace MediaSite_backend.Data
                     Title = "Syksyn 2026 hajuvesiuutuudet miehille",
                     Content = "1. Hugo Boss bottled Absolu 2. Giorgio Armani I Will 3. Yves Saint Laurent MYSLF EDT Intense 4. Dolce & Gabbana The One Parfum 5. Valentino Vendetta Uomo",
                     HeroImage = "/Uploads/Menswear-closet.jpg",
-                    CategoryId = Guid.Parse("7de610c5-ee94-4cfd-8a8b-43d1a7077c6d"),
-                    AuthorId = Guid.Parse("01a0a63e-dfda-7d01-99a5-b2e4df5d1135"),
+                    CategoryId = Guid.Parse("6425fd8a-65aa-4973-beb2-82733f34deca"),
+                    AuthorId = Guid.Parse(_testAuthorGuid),
                 }
             };
 
-            foreach (var article in createArticleDtos) 
+            foreach (var article in createArticleDtos)
             {
-               var testArticle = await articleRepository.GetBySlugAsync("syksyn-2026-hajuvesiuutuudet-miehille");
+                var testArticle = await articleRepository.GetBySlugAsync("syksyn-2026-hajuvesiuutuudet-miehille");
 
-                if (testArticle == null) 
+                if (testArticle == null)
                 {
                     await articleRepository.CreateAsync(article);
                 }

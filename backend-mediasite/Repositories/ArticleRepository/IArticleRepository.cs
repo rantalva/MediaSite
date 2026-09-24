@@ -7,7 +7,7 @@ namespace MediaSite_backend.Repositories.ArticleRepository
     {
         Task<IEnumerable<GetArticleDto>> GetAllArticlesAsync();
         Task<Article?> GetByIdAsync(Guid id);
-        Task<Article?> GetBySlugAsync(string slug);
+        Task<GetArticleDto?> GetBySlugAsync(string slug);
         Task<Article> CreateAsync(CreateArticleDto createArticleDto);
         Task<Article> UpdateAsync(Guid id, EditArticleDto editArticleDto);
         Task<bool> DeleteAsync(Guid id);

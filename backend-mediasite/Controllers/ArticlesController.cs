@@ -2,6 +2,7 @@
 using MediaSite_backend.Models.Dtos.Article;
 using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Repositories.ArticleRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Slugify;
 
@@ -34,9 +35,9 @@ namespace MediaSite_backend.Controllers
             }
             return BadRequest();
         }
-
+        [Authorize(Roles = ApplicationUserRoles.Admin)]
         [HttpGet("{slug}", Name = "GetArticleBySlug")] // using string as constrait is not allowed! Remember that
-        public async Task<ActionResult<Article>> GetArticleBySlug(string slug)
+        public async Task<ActionResult<GetArticleDto>> GetArticleBySlug(string slug)
         {
             if (slug != null)
             {

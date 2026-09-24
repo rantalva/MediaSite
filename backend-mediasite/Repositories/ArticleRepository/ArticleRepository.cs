@@ -57,6 +57,7 @@ public class ArticleRepository : IArticleRepository
     public async Task<IEnumerable<GetArticleDto>> GetAllArticlesAsync()
     {
         return await _applicationDbContext.Articles
+            .OrderByDescending(a => a.CreatedDate)
             .Select(a => new GetArticleDto
             {
                 Id = a.Id,
@@ -82,9 +83,28 @@ public class ArticleRepository : IArticleRepository
         return await _applicationDbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
     }
 
-    public async Task<Article?> GetBySlugAsync(string slug)
+    public async Task<GetArticleDto?> GetBySlugAsync(string slug)
     {
-        return await _applicationDbContext.Articles.FirstOrDefaultAsync(a => a.Slug == slug);
+        return await _applicationDbContext.Articles
+            .Where(a => a.Slug == slug)
+            .Select(a => new GetArticleDto
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Slug = a.Slug,
+                Content = a.Content,
+                HeroImage = a.HeroImage,
+                CreatedDate = a.CreatedDate,
+                LastEditDate = a.LastEditDate,
+                CategoryId = a.CategoryId,
+                CategoryName = a.Category!.Name,
+
+                AuthorId = a.AuthorId,
+                AuthorName = a.Author != null
+                    ? a.Author.FirstName + " " + a.Author.LastName
+                    : null
+            })
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Article?> UpdateAsync(Guid id, EditArticleDto articleDto)
