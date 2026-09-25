@@ -14,6 +14,7 @@ For database, Postgresql 18 is used
 #### Frontend
 Frontend will be build with Astro due content mostly being static.
 - Frontend will in future have a rich texteditor for creating posts, this will be done with Lexical
+- https://webcoreui.dev/blocks/introduction
 #### Hosting
 Most likely a VPS will be used for hosting, but due to price increase this is still open. We could use Cloud provider like AWS/Azure, but their costs also high and maybe overkill
 
