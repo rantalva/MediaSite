@@ -44,8 +44,7 @@ builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<INewsLetterSubscriberRepository, NewsLetterSubscriberRepository>();
 builder.Services.AddCloudflareR2Client(builder.Configuration);
-builder.Services.AddCloudflareApiClient(builder.Configuration);
-builder.Services.AddSingleton<StorageService>();
+builder.Services.AddScoped<StorageService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

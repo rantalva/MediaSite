@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediaSite_backend.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaSite_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UploadsController : ControllerBase
+    public class UploadsController(StorageService storageService) : ControllerBase
     {
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(IFormFile file)
@@ -13,27 +14,24 @@ namespace MediaSite_backend.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            var allowedTypes = new[] { ".jpg", ".png", ".pdf" };
-            var extension = Path.GetExtension(file.FileName).ToLower();
+            var allowedTypes = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+
+            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
 
             if (!allowedTypes.Contains(extension))
                 return BadRequest("Invalid file type.");
 
-            var wwwroot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var key = $"uploads/{Guid.NewGuid()}{extension}";
 
-            var uploadsFolder = Path.Combine(wwwroot, "Uploads");
+            await using var stream = file.OpenReadStream();
 
-            if (!Directory.Exists(uploadsFolder))
-                Directory.CreateDirectory(uploadsFolder);
+            await storageService.UploadAsync(key, stream);
 
-            var filePath = Path.Combine(uploadsFolder, file.FileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            return Ok(new
             {
-                await file.CopyToAsync(stream);
-            }
-
-            return Ok(new { message = "File uploaded successfully." });
+                message = "File uploaded successfully.",
+                key
+            });
         }
     }
 }
