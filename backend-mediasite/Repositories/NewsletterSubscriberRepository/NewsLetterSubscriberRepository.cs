@@ -57,6 +57,8 @@ namespace MediaSite_backend.Repositories.NewsletterSubscriberRepository
 
             subscriber.Email = newsletterSubscriberDto.Email;
 
+            await _applicationDbContext.SaveChangesAsync();
+
             return subscriber;
         }
 

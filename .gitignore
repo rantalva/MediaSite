@@ -522,3 +522,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# dotnet test output
+TestResults/
+*.coverage
+*.trx
+coverage.cobertura.xml

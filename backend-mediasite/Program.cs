@@ -52,8 +52,11 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+// Seeding is skipped under the "Testing" environment so integration tests start from a
+// known-empty database instead of hitting a real Postgres at host build time.
+if (!app.Environment.IsEnvironment("Testing"))
 {
+    using var scope = app.Services.CreateScope();
     await SeedData.InitializeAsync(scope.ServiceProvider);
 }
 
@@ -80,3 +83,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Exposed so WebApplicationFactory<Program> can boot the app in integration tests.
+public partial class Program { }

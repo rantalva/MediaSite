@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <!--
+            EF Core migrations are generated boilerplate exercised through MigrationDriftTests
+            rather than directly, so counting them reports a large block of lines no test is
+            expected to reach. MockData holds static in-memory lists that nothing references
+            (ArticlesController imports ArticlesStore but never uses it). Excluding both keeps the
+            coverage number about code the tests can actually reach.
+
+            coverlet reads each configuration key once, so the patterns have to be a single
+            comma-delimited value rather than repeated elements. The obj pattern has to be
+            recursive: source-generator output such as OpenApiXmlCommentSupport.generated.cs is
+            written to obj/Release/net10.0/<generator>/<type>/ and a bare **/obj/*.cs misses it,
+            which alone accounts for roughly a third of the reported uncovered lines.
+          -->
+          <ExcludeByFile>**/Migrations/*.cs,**/MockData/*.cs,**/obj/**/*.cs,**/*.generated.cs</ExcludeByFile>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
