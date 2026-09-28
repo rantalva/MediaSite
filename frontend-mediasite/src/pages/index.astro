@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getArticles, imageUrl } from '../lib/api';
+import { getArticles, getCategories, imageUrl } from '../lib/api';
 import { getAccessToken } from '../lib/auth';
 import { formatDate } from '../lib/format';
-
-import { Footer } from 'webcoreui/astro'
+import { categoryLabel } from '../lib/i18n';
 
 const articles = await getArticles(await getAccessToken(Astro.cookies));
+
 ---
 
 <Layout title="MediaSite" description="Uusimmat artikkelit MediaSite-sivustolla">
@@ -28,7 +28,7 @@ const articles = await getArticles(await getAccessToken(Astro.cookies));
 						</a>
 						<p class="card-meta">
 							<a href={`/categories/${encodeURIComponent(article.categoryName)}`}>
-								{article.categoryName}
+								{categoryLabel(article.categoryName)}
 							</a>
 							{' · '}
 							<time datetime={article.createdDate ?? undefined}>{formatDate(article.createdDate)}</time>
@@ -37,7 +37,6 @@ const articles = await getArticles(await getAccessToken(Astro.cookies));
 				))
 			}
 		</section>
-		<Footer />
 	</main>
 </Layout>
 

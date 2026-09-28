@@ -1,6 +1,9 @@
 ---
+import { Modal, Sheet } from 'webcoreui/astro';
+
 import { getCategories } from '../lib/api';
 import { getSession } from '../lib/auth';
+import { categoryLabel } from '../lib/i18n';
 
 const categories = (await getCategories()).filter((category) => category.name);
 let session: Awaited<ReturnType<typeof getSession>> = null;
@@ -16,29 +19,70 @@ try {
 	<div class="navbar-inner">
 		<a class="brand" href="/">MediaSite</a>
 
-		<nav class="categories" aria-label="Kategoriat">
+		<div class="categories">
 			{categories.map((category) => (
 				<a class="nav-link" href={`/categories/${encodeURIComponent(category.name as string)}`}>
-					{category.name}
+					{categoryLabel(category.name)}
 				</a>
 			))}
-		</nav>
+		</div>
 
-		<div class="auth">
-			{session ? (
-				<>
-					<span class="user" title={session.email}>{session.email}</span>
-					<button class="btn" type="button" data-logout>Kirjaudu ulos</button>
-				</>
-			) : (
-				<>
-					<button class="btn" type="button" data-auth-open="login">Kirjaudu sisään</button>
-					<button class="btn btn-primary" type="button" data-auth-open="register">Luo tili</button>
-				</>
-			)}
+		<div class="actions">
+			<button class="nav-link" type="button" data-newsletter-open>Uutiskirje</button>
+
+			{
+				session ? (
+					<>
+						<span class="user" title={session.email}>{session.email}</span>
+						<button class="nav-link" type="button" data-logout>Kirjaudu ulos</button>
+					</>
+				) : (
+					<button class="nav-link" type="button" data-auth-open="login">Kirjaudu sisään</button>
+				)
+			}
+
+			<button
+				class="drawer-toggle"
+				type="button"
+				data-drawer-open
+				aria-label="Valikko"
+				aria-expanded="false"
+			>
+				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+					<path d="M0 2h16v2H0zM0 7h16v2H0zM0 12h16v2H0z" fill="currentColor"></path>
+				</svg>
+				<span>Valikko</span>
+			</button>
 		</div>
 	</div>
 </nav>
+
+<Sheet className="nav-drawer" id="nav-drawer" position="left" showCloseIcon>
+	<div class="drawer-links">
+		{categories.map((category) => (
+			<a class="drawer-link" href={`/categories/${encodeURIComponent(category.name as string)}`}>
+				{categoryLabel(category.name)}
+			</a>
+		))}
+	</div>
+</Sheet>
+
+<Modal className="newsletter-modal" id="newsletter-modal" title="Uutiskirje" subTitle="Saat uusimmat artikkelit suoraan sähköpostiin.">
+	<form class="newsletter-form" novalidate>
+		<label for="newsletter-email">Sähköposti</label>
+		<input
+			id="newsletter-email"
+			type="email"
+			name="email"
+			autocomplete="email"
+			placeholder="etunimi@esimerkki.fi"
+			required
+		/>
+		<p class="form-error" data-newsletter-error hidden></p>
+		<button class="newsletter-submit" type="submit">Tilaa</button>
+		<p class="form-success" data-newsletter-success hidden>Kiitos! Tilaus onnistui.</p>
+	</form>
+</Modal>
 
 <dialog id="auth-dialog" class="auth-dialog">
 	<form method="dialog" class="dialog-topbar">
@@ -60,7 +104,7 @@ try {
 			<input type="password" name="password" autocomplete="current-password" required />
 		</label>
 		<p class="form-error" data-error hidden></p>
-		<button class="btn btn-primary" type="submit">Kirjaudu sisään</button>
+		<button class="auth-submit" type="submit">Kirjaudu sisään</button>
 	</form>
 
 	<form id="register-form" class="auth-form" action="/api/auth/register" method="post" hidden novalidate>
@@ -77,11 +121,13 @@ try {
 			<input type="password" name="confirmPassword" autocomplete="new-password" minlength="6" required />
 		</label>
 		<p class="form-error" data-error hidden></p>
-		<button class="btn btn-primary" type="submit">Luo tili</button>
+		<button class="auth-submit" type="submit">Luo tili</button>
 	</form>
 </dialog>
 
 <script>
+	import { modal } from 'webcoreui';
+
 	const dialog = document.getElementById('auth-dialog') as HTMLDialogElement;
 	let activeTab: 'login' | 'register' = 'login';
 
@@ -93,8 +139,8 @@ try {
 	function updateVisible() {
 		loginForm.hidden = activeTab !== 'login';
 		registerForm.hidden = activeTab !== 'register';
-		tabLogin.classList.toggle('active', activeTab === 'login');
-		tabRegister.classList.toggle('active', activeTab === 'register');
+		tabLogin.classList.toggle('is-active', activeTab === 'login');
+		tabRegister.classList.toggle('is-active', activeTab === 'register');
 	}
 
 	function openDialog(tab: 'login' | 'register') {
@@ -150,6 +196,66 @@ try {
 			window.location.reload();
 		});
 	}
+
+	modal({ trigger: '[data-drawer-open]', modal: '#nav-drawer' });
+	modal({ trigger: '[data-newsletter-open]', modal: '#newsletter-modal' });
+
+	const drawerToggle = document.querySelector<HTMLButtonElement>('[data-drawer-open]');
+	drawerToggle?.addEventListener('click', () => {
+		drawerToggle.setAttribute('aria-expanded', 'true');
+	});
+
+	document.querySelectorAll<HTMLAnchorElement>('.drawer-link').forEach((link) => {
+		link.addEventListener('click', () => drawerToggle?.setAttribute('aria-expanded', 'false'));
+	});
+
+	const newsletterForm = document.querySelector<HTMLFormElement>('.newsletter-form');
+	const newsletterError = document.querySelector<HTMLParagraphElement>('[data-newsletter-error]');
+	const newsletterSuccess = document.querySelector<HTMLParagraphElement>('[data-newsletter-success]');
+
+	newsletterForm?.addEventListener('submit', async (event) => {
+		event.preventDefault();
+
+		const emailInput = newsletterForm.elements.namedItem('email') as HTMLInputElement;
+		const submitBtn = newsletterForm.querySelector('[type="submit"]') as HTMLButtonElement;
+
+		if (newsletterError) newsletterError.hidden = true;
+
+		if (!emailInput.value.trim() || !emailInput.validity.valid) {
+			if (newsletterSuccess) newsletterSuccess.hidden = true;
+			if (newsletterError) {
+				newsletterError.textContent = 'Anna kelvollinen sähköpostiosoite.';
+				newsletterError.hidden = false;
+			}
+			return;
+		}
+
+		submitBtn.disabled = true;
+
+		let data: { ok: boolean; message?: string };
+		try {
+			const response = await fetch('/api/newsletter/subscribe', {
+				method: 'POST',
+				body: new FormData(newsletterForm),
+			});
+			data = await response.json();
+		} catch {
+			data = { ok: false, message: 'Yhteyden muodostaminen palvelimeen epäonnistui.' };
+		}
+
+		submitBtn.disabled = false;
+
+		if (data.ok) {
+			newsletterForm.hidden = true;
+			if (newsletterSuccess) newsletterSuccess.hidden = false;
+		} else {
+			if (newsletterSuccess) newsletterSuccess.hidden = true;
+			if (newsletterError) {
+				newsletterError.textContent = data.message || 'Tapahtui virhe.';
+				newsletterError.hidden = false;
+			}
+		}
+	});
 </script>
 
 <style>
@@ -158,51 +264,70 @@ try {
 		top: 0;
 		z-index: 10;
 		background: #ffffff;
-		border-bottom: 1px solid #e5e7eb;
+		border-bottom: 1px solid #000000;
 	}
 
 	.navbar-inner {
 		max-width: 960px;
 		margin: 0 auto;
 		padding: 0 1rem;
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
 		min-height: 3.5rem;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: auto auto 1fr;
+		align-items: center;
+		gap: 1.75rem;
 	}
 
 	.brand {
 		font-weight: 700;
 		font-size: 1.125rem;
-		color: inherit;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #121212;
 		text-decoration: none;
+		white-space: nowrap;
 	}
 
 	.categories {
 		display: flex;
 		align-items: center;
-		gap: 0.125rem;
-		flex-wrap: wrap;
+		gap: 0.25rem;
+		overflow: hidden;
 	}
 
 	.nav-link {
-		padding: 0.375rem 0.625rem;
-		border-radius: 6px;
-		color: inherit;
-		text-decoration: none;
+		background: none;
+		border: none;
+		font: inherit;
+		padding: 0.75rem 0.5rem;
+		color: #121212;
+		cursor: pointer;
+		white-space: nowrap;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
 		font-size: 0.875rem;
+		font-weight: 700;
+		line-height: 1.14;
+		border-bottom: 2px solid transparent;
 	}
 
 	.nav-link:hover {
-		background: #f3f4f6;
+		background: #f7f7f7;
 	}
 
-	.auth {
-		margin-left: auto;
+	.nav-link:active {
+		background: #e3e1de;
+	}
+
+	.nav-link:focus-visible {
+		outline: 2px solid #2e302f;
+		outline-offset: -2px;
+	}
+
+	.actions {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		justify-self: end;
 	}
 
 	.user {
@@ -214,34 +339,105 @@ try {
 		white-space: nowrap;
 	}
 
-	.btn {
-		border: 1px solid #d1d5db;
-		border-radius: 8px;
-		background: #ffffff;
-		color: #111827;
-		padding: 0.5rem 0.875rem;
+	.drawer-toggle {
+		display: none;
+		align-items: center;
+		gap: 0.25rem;
+		background: none;
+		border: none;
+		font: inherit;
 		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		color: #121212;
 		cursor: pointer;
+		padding: 0.75rem 0.5rem;
 		white-space: nowrap;
 	}
 
-	.btn:hover {
-		background: #f3f4f6;
+	.drawer-toggle:hover {
+		background: #f7f7f7;
 	}
 
-	.btn-primary {
-		background: #111827;
-		border-color: #111827;
+	.drawer-toggle:focus-visible {
+		outline: 2px solid #2e302f;
+		outline-offset: -2px;
+	}
+
+	.nav-drawer {
+		width: min(320px, 90vw);
+	}
+
+	.drawer-links {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.drawer-link {
+		display: block;
+		padding: 0.875rem 0;
+		color: #121212;
+		text-decoration: none;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		font-size: 0.875rem;
+		font-weight: 700;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.drawer-link:hover {
+		background: #f7f7f7;
+	}
+
+	.newsletter-form {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.newsletter-form label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-size: 0.875rem;
+		color: #374151;
+	}
+
+	.newsletter-form input {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid #d1d5db;
+		border-radius: 0;
+		font-size: 0.875rem;
+	}
+
+	.newsletter-submit {
+		border: 1px solid #121212;
+		border-radius: 0;
+		background: #121212;
 		color: #ffffff;
+		padding: 0.625rem 0.875rem;
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		cursor: pointer;
 	}
 
-	.btn-primary:hover {
-		background: #1f2937;
+	.newsletter-submit:hover {
+		background: #2e302f;
+		border-color: #2e302f;
+	}
+
+	.form-success {
+		margin: 0;
+		color: #14532d;
+		font-size: 0.875rem;
 	}
 
 	.auth-dialog {
 		border: 1px solid #e5e7eb;
-		border-radius: 12px;
+		border-radius: 0;
 		padding: 1.25rem;
 		max-width: 360px;
 		width: 100%;
@@ -270,7 +466,7 @@ try {
 		display: flex;
 		gap: 0.25rem;
 		background: #f3f4f6;
-		border-radius: 8px;
+		border-radius: 0;
 		padding: 0.25rem;
 		margin-bottom: 1rem;
 	}
@@ -280,13 +476,13 @@ try {
 		border: none;
 		background: none;
 		padding: 0.5rem;
-		border-radius: 6px;
+		border-radius: 0;
 		cursor: pointer;
 		font-size: 0.875rem;
 		color: #6b7280;
 	}
 
-	.tabs button.active {
+	.tabs button.is-active {
 		background: #ffffff;
 		color: #111827;
 		font-weight: 600;
@@ -309,13 +505,45 @@ try {
 	.auth-form input {
 		padding: 0.5rem 0.75rem;
 		border: 1px solid #d1d5db;
-		border-radius: 8px;
+		border-radius: 0;
 		font-size: 0.875rem;
+	}
+
+	.auth-submit {
+		border: 1px solid #121212;
+		border-radius: 0;
+		background: #121212;
+		color: #ffffff;
+		padding: 0.625rem 0.875rem;
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.043em;
+		cursor: pointer;
+	}
+
+	.auth-submit:hover {
+		background: #2e302f;
+		border-color: #2e302f;
 	}
 
 	.form-error {
 		margin: 0;
 		color: #b91c1c;
 		font-size: 0.875rem;
+	}
+
+	@media (max-width: 767px) {
+		.navbar-inner {
+			gap: 1rem;
+		}
+
+		.categories {
+			display: none;
+		}
+
+		.drawer-toggle {
+			display: flex;
+		}
 	}
 </style>

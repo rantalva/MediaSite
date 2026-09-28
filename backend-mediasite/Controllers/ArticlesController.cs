@@ -35,7 +35,7 @@ namespace MediaSite_backend.Controllers
             }
             return BadRequest();
         }
-        [Authorize(Roles = ApplicationUserRoles.Admin)]
+
         [HttpGet("{slug}", Name = "GetArticleBySlug")] // using string as constrait is not allowed! Remember that
         public async Task<ActionResult<GetArticleDto>> GetArticleBySlug(string slug)
         {

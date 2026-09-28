@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCategories, imageUrl } from '../../lib/api';
 import { getAccessToken } from '../../lib/auth';
+import { categoryLabel } from '../../lib/i18n';
 import type { Category } from '../../types/api';
 
 const { name } = Astro.params;
@@ -23,13 +24,13 @@ if (!category) {
 
 {category && (
 	<Layout
-		title={`${category.name} - MediaSite`}
-		description={`Artikkelit kategoriasta ${category.name}`}
+		title={`${categoryLabel(category.name)} - MediaSite`}
+		description={`Artikkelit kategoriasta ${categoryLabel(category.name)}`}
 	>
 		<main>
 			<header class="page-header">
 				<a class="back" href="/">← Kaikki artikkelit</a>
-				<h1>{category.name}</h1>
+				<h1>{categoryLabel(category.name)}</h1>
 				<p class="tagline">{category.articles.length} artikkelia</p>
 			</header>
 

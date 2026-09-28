@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { ApiError, getArticleBySlug, imageUrl } from '../../lib/api';
 import { getAccessToken, refreshAccessToken } from '../../lib/auth';
 import { formatDate } from '../../lib/format';
+import { categoryLabel } from '../../lib/i18n';
 import type { Article } from '../../types/api';
 
 const { slug } = Astro.params;
@@ -48,7 +49,7 @@ const paragraphs = (article?.content ?? '')
 				<header class="article-header">
 					<p class="article-category">
 						<a href={`/categories/${encodeURIComponent(article.categoryName)}`}>
-							{article.categoryName}
+							{categoryLabel(article.categoryName)}
 						</a>
 					</p>
 					<h1>{article.title}</h1>

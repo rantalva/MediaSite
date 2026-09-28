@@ -1,5 +1,25 @@
 ---
+import '../styles/global.scss';
+
+import { getCategories } from '../lib/api';
 import Navbar from '../components/Navbar.astro';
+import { categoryLabel } from '../lib/i18n';
+import { Footer } from 'webcoreui/astro'
+const footerCategories = (await getCategories()).filter((category) => category.name);
+
+const footerColumns = [
+	{
+		title: 'Kategoriat',
+		items: footerCategories.map((category) => ({
+			name: categoryLabel(category.name),
+			href: `/categories/${encodeURIComponent(category.name as string)}`,
+		})),
+	},
+	{
+		title: 'Sivusto',
+		items: [{ name: 'Etusivu', href: '/', active: true }],
+	},
+].filter((column) => column.items.length > 0);
 
 interface Props {
 	title?: string;
@@ -25,6 +45,11 @@ const {
 	<body>
 		<Navbar />
 		<slot />
+		<Footer
+		logo={{ url: '/favicon.svg', alt: 'MediaSite', width: 32, height: 32, eager: true }}
+		columns={footerColumns}
+		subText={`&copy; ${new Date().getFullYear()} MediaSite`}
+		/>
 	</body>
 </html>
 
