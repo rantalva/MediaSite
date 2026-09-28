@@ -4,6 +4,8 @@ import { getArticles, imageUrl } from '../lib/api';
 import { getAccessToken } from '../lib/auth';
 import { formatDate } from '../lib/format';
 
+import { Footer } from 'webcoreui/astro'
+
 const articles = await getArticles(await getAccessToken(Astro.cookies));
 ---
 
@@ -35,6 +37,7 @@ const articles = await getArticles(await getAccessToken(Astro.cookies));
 				))
 			}
 		</section>
+		<Footer />
 	</main>
 </Layout>
 
