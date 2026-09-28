@@ -30,7 +30,7 @@ namespace MediaSite_backend.Data
                 },
                 new CategoryDto()
                 {
-                    Name  = "Sports"
+                    Name  = "Sport"
                 },
             };
 
