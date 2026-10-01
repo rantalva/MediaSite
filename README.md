@@ -3,6 +3,8 @@ this is a fullstack application media site built for publishing articles.
 
 Goal is to create a search engine optimized article/news site with role based permissions.
 
+For secrets use Infisical in future
+
 ## Stack
 #### Database
 For database, Postgresql 18 is used
