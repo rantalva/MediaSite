@@ -45,14 +45,16 @@ Infisical provides the application's secrets without storing them in the reposit
 
 Windows:
 
-    ``` Powershell
+    ``` 
+    Powershell
     [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_ID", "YOUR_CLIENT_ID", "User")
     [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_SECRET", "YOUR_CLIENT_SECRET", "User")
     ```
 
 Linux:
 
-    ``` Bash   
+    ``` 
+    Bash   
     export INFISICAL_CLIENT_ID="YOUR_CLIENT_ID"
     export INFISICAL_CLIENT_SECRET="YOUR_CLIENT_SECRET"
     ```
