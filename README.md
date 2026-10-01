@@ -21,6 +21,36 @@ Frontend will be build with Astro due content mostly being static.
 Most likely a VPS will be used for hosting, but due to price increase this is still open. We could use Cloud provider like AWS/Azure, but their costs also high and maybe overkill
 
 Future stack:
-- VPS (Hetzner?)
+- VPS (Hetzner?) mostlikely will be upcloud due to it having local vps.
 - Github actions
 - Docker
+
+
+## Infisical Setup
+
+Infisical provides the application's secrets without storing them in the repository.
+
+### Setup
+
+1. **Go to Infisical**
+   - Open the MediaSite project.
+   - Create a **Machine Identity** with read access to the required environment.
+
+2. **Create the credentials**
+   - Copy the Machine Identity's:
+     - `Client ID`
+     - `Client Secret`
+
+3. **Add them to the machine's environment**
+
+Windows:
+
+    ```powershell
+    [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_ID", "YOUR_CLIENT_ID", "User")
+    [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_SECRET", "YOUR_CLIENT_SECRET", "User")
+
+Linux:
+
+    ```Bash   
+    export INFISICAL_CLIENT_ID="YOUR_CLIENT_ID"
+    export INFISICAL_CLIENT_SECRET="YOUR_CLIENT_SECRET"
