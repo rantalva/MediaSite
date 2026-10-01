@@ -48,9 +48,11 @@ Windows:
     ```powershell
     [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_ID", "YOUR_CLIENT_ID", "User")
     [Environment]::SetEnvironmentVariable("INFISICAL_CLIENT_SECRET", "YOUR_CLIENT_SECRET", "User")
+    ```
 
 Linux:
 
     ```Bash   
     export INFISICAL_CLIENT_ID="YOUR_CLIENT_ID"
     export INFISICAL_CLIENT_SECRET="YOUR_CLIENT_SECRET"
+    ```
