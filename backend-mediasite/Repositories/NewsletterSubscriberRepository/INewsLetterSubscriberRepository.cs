@@ -12,5 +12,6 @@ namespace MediaSite_backend.Repositories.NewsletterSubscriberRepository
         Task<NewsletterSubscriber> EditNewsletterSubscriberStatusAsync(Guid id, NewsletterSubscriberStatusDto newsletterSubscriberDto);
         Task<NewsletterSubscriber> AddNewsletterSubscriberAsync(NewsletterSubscriberDto newsletterSubscriberDto);
         Task<bool> DeleteNewsletterSubscriberAsync(Guid id);
+        Task<int> GetNewsLettersubscribersCountAsync();
     }
 }

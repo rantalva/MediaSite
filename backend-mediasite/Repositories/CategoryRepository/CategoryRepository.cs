@@ -133,5 +133,10 @@ namespace MediaSite_backend.Repositories.CategoryRepository
                })
                .FirstOrDefaultAsync();
         }
+        public async Task<int> GetCategoriesCountAsync()
+        {
+            return await _applicationDbContext.Categories.CountAsync();
+        }
     }
+
 }

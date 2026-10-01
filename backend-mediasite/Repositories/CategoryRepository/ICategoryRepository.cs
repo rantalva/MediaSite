@@ -12,5 +12,6 @@ namespace MediaSite_backend.Repositories.CategoryRepository
         Task<Category> CreateCategoryAsync(CategoryDto categoryDto);
         Task<bool> DeleteCategoryAsync(Guid id);
         Task<GetCategoryWithPostsDto> GetCategoryWithArticlesByNameAsync(string categoryName);
+        Task<int> GetCategoriesCountAsync();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Cloudflare.NET.R2;
 using Cloudflare.NET.R2.Models;
 
-namespace MediaSite_backend.Services
+namespace MediaSite_backend.Service
 {
     public class StorageService(IR2Client r2, IConfiguration configuration)
     {

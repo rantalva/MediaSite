@@ -1,5 +1,4 @@
-﻿using MediaSite_backend.Services;
-using Microsoft.AspNetCore.Http;
+﻿using MediaSite_backend.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaSite_backend.Controllers

@@ -128,4 +128,8 @@ public class ArticleRepository : IArticleRepository
 
         return article;
     }
+    public async Task<int> GetArticlesCountAsync()
+    {
+        return await _applicationDbContext.Articles.CountAsync();
+    }
 }

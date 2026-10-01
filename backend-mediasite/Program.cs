@@ -2,10 +2,12 @@ using Cloudflare.NET.Core;
 using Cloudflare.NET.R2;
 using MediaSite_backend.Data;
 using MediaSite_backend.Models.Entities;
+using MediaSite_backend.Repositories.ApplicationUserRepository;
 using MediaSite_backend.Repositories.ArticleRepository;
 using MediaSite_backend.Repositories.CategoryRepository;
 using MediaSite_backend.Repositories.NewsletterSubscriberRepository;
-using MediaSite_backend.Services;
+using MediaSite_backend.Service;
+using MediaSite_backend.Service.AdminService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -43,8 +45,10 @@ builder.Services.AddSingleton<SlugHelper>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<INewsLetterSubscriberRepository, NewsLetterSubscriberRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddCloudflareR2Client(builder.Configuration);
 builder.Services.AddScoped<StorageService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

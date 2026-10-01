@@ -11,5 +11,6 @@ namespace MediaSite_backend.Repositories.ArticleRepository
         Task<Article> CreateAsync(CreateArticleDto createArticleDto);
         Task<Article> UpdateAsync(Guid id, EditArticleDto editArticleDto);
         Task<bool> DeleteAsync(Guid id);
+        Task<int> GetArticlesCountAsync();
     }
 }

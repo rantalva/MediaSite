@@ -11,11 +11,9 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class CategoriesController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
     private readonly ICategoryRepository _categoryRepository;
-    public CategoriesController(ApplicationDbContext context, ICategoryRepository categoryRepository)
+    public CategoriesController(ICategoryRepository categoryRepository)
     {
-        _context = context;
         _categoryRepository = categoryRepository;
     }
 

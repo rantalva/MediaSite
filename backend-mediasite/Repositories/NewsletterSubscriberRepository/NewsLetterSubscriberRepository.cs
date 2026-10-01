@@ -87,5 +87,9 @@ namespace MediaSite_backend.Repositories.NewsletterSubscriberRepository
         {
             return await _applicationDbContext.NewsletterSubscribers.ToListAsync();
         }
+        public async Task<int> GetNewsLettersubscribersCountAsync()
+        {
+            return await _applicationDbContext.NewsletterSubscribers.CountAsync();
+        }
     }
 }
