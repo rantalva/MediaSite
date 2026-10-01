@@ -18,7 +18,7 @@ public class ArticleRepository : IArticleRepository
     }
     public async Task<Article> CreateAsync(CreateArticleDto articleDto)
     {
-        if (await _applicationDbContext.Articles.AnyAsync(a => a.Title == articleDto.Title)) 
+        if (await _applicationDbContext.Articles.AnyAsync(a => a.Title == articleDto.Title))
         {
             return null;
         }

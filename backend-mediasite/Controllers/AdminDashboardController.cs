@@ -17,7 +17,7 @@ namespace MediaSite_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<AdminDashboardDto>> GetAdminDashboard()
         {
-            return Ok(_adminService.GetAdminDashboard());
+            return Ok(await _adminService.GetAdminDashboard());
         }
     }
 }

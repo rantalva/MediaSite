@@ -1,5 +1,7 @@
 using Cloudflare.NET.Core;
 using Cloudflare.NET.R2;
+using InfisicalConfiguration;
+using MediaSite_backend.Extensions;
 using MediaSite_backend.Data;
 using MediaSite_backend.Models.Entities;
 using MediaSite_backend.Repositories.ApplicationUserRepository;
@@ -16,6 +18,8 @@ using Slugify;
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddInfisicalConfiguration();
 
 builder.Services.AddCors(options =>
 {
